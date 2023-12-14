@@ -47,10 +47,9 @@ free(data);
  * monty_interpreter - interprets Monty byte code
  * @file_path: path to the Monty byte code file
  */
-void monty_interpreter(const char *file_path)
+void monty_interpreter(const char *file_path, stack_t **stack)
 {
 FILE *file = fopen(file_path, "r");
-stack_t *stack = NULL;
 char *line = NULL;
 size_t len = 0;
 unsigned int line_number = 0;
@@ -69,7 +68,7 @@ line_number++;
 if (opcode)
 {
 instruction_t *data = get_instruction(opcode);
-data->f(&stack, line_number);
+execute_opcode(stack, line_number, data);
 free(data); }}
 
 free(line);
